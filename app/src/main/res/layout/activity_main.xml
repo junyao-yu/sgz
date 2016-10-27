@@ -11,7 +11,7 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="105dp"
     android:background="#1191FC"/>
-
+<!--https://github.com/Aspsine/SwipeToLoadLayout/wiki/Quick-Setup-->
     <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
         android:id="@+id/swipeToLoadLayout"
         android:layout_width="match_parent"
