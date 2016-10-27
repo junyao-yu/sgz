@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.widget.Toast;
 
+import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
+import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.shiguangzhou.R;
 import com.shiguangzhou.adapter.InvestPlanAdapter;
 import com.shiguangzhou.third.ItemDecorator;
@@ -23,37 +25,34 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private InvestPlanAdapter mAdapter;
     private int mHeaderDisplay = 9;
-    private View line;
+    private SwipeToLoadLayout swipeToLoadLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        line = findViewById(R.id.line);
+        mRecyclerView = (RecyclerView) findViewById(R.id.swipe_target);
+        swipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
+
+        swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                Toast.makeText(MainActivity.this, "onLoadMore", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         ItemDecorator decor = new ItemDecorator.Builder(this)
                 .decorateSlm(LinearSLM.ID)
                 .build();
         mRecyclerView.addItemDecoration(decor);
-
         mAdapter = new InvestPlanAdapter(this, mHeaderDisplay);
         LayoutManager layoutManager = new LayoutManager.Builder(this)
                 .addAdapter(mAdapter)
                 .build();
         mRecyclerView.setLayoutManager(layoutManager);
-//        mAdapter.setHeaderDisplay(mHeaderDisplay);
         mRecyclerView.setAdapter(mAdapter);
-//        setHeadersSticky(true);
 
-//        line.setBackgroundResource(R.color.color_1191FC);
-//        line.bringToFront();
+//        swipeToLoadLayout.setLoadingMore(true);
     }
 
-//    public void setHeadersSticky(boolean areHeadersSticky) {
-//        mHeaderDisplay = areHeadersSticky ? mHeaderDisplay
-//                | LayoutManager.LayoutParams.HEADER_STICKY
-//                : mHeaderDisplay & ~LayoutManager.LayoutParams.HEADER_STICKY;
-//        mAdapter.setHeaderDisplay(mHeaderDisplay);
-//    }
 }

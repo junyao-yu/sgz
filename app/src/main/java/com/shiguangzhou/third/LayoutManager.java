@@ -11,6 +11,7 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -34,7 +35,7 @@ import java.util.HashMap;
  * A LayoutManager that lays out mSection headers with optional stickiness and uses a map of
  * sections to view layout managers to layout items.
  */
-public class LayoutManager extends RecyclerView.LayoutManager {
+public class LayoutManager extends LinearLayoutManager {
 
     final static int DIRECTION_END = 0;
 
@@ -69,6 +70,7 @@ public class LayoutManager extends RecyclerView.LayoutManager {
     private ArrayList<SectionData> mSections;
 
     public LayoutManager(Context context) {
+        super(context);
         mLinearSlm = new LinearSLM();
         mGridSlm = new GridSLM(context);
         mSlms = new HashMap<>();
@@ -78,6 +80,7 @@ public class LayoutManager extends RecyclerView.LayoutManager {
     // Suppress unchecked list assignment warning.
     @SuppressWarnings("unchecked")
     LayoutManager(Builder builder) {
+        super(builder.context);
         mLinearSlm = new LinearSLM();
         mGridSlm = new GridSLM(builder.context);
         mSlms = builder.slms;

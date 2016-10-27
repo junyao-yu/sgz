@@ -32,7 +32,7 @@ public class InvestPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int VIEW_TYPE_CONTENT = 0x00;
 
 
-    private final Section mSectionGraph = new Section();
+    private Section mSectionGraph = new Section();
 
     private int mHeaderDisplay;
 
@@ -40,13 +40,26 @@ public class InvestPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private final Context mContext;
 
-
     public InvestPlanAdapter(Context context, int headerMode) {
         mContext = context;
 
         final String[] countryNames = context.getResources().getStringArray(R.array.country_names);
         mHeaderDisplay = headerMode;
 
+        setData(countryNames, false);
+    }
+
+    public void addData() {
+        final String[] countryNames = mContext.getResources().getStringArray(R.array.temp_countory);
+
+        setData(countryNames, true);
+    }
+
+    private void setData(String[] countryNames, boolean bFlag) {
+        if(bFlag) {
+            mSectionGraph = null;
+            mSectionGraph = new Section();
+        }
         //Insert headers into list of items.
         String lastHeaderText = "";
         int sectionManager = -1;
@@ -78,6 +91,7 @@ public class InvestPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Log.e("lastend--->", mSectionGraph.getCount() + "");
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -103,6 +117,8 @@ public class InvestPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, "click--->" + position, Toast.LENGTH_SHORT).show();
+//                    addData();
+//                    notifyDataSetChanged();
                 }
             });
         }
@@ -148,6 +164,7 @@ public class InvestPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
+        Log.e("getItemViewType-->", position+"");
         return mSectionGraph.getItem(position).isHeader ? VIEW_TYPE_HEADER : VIEW_TYPE_CONTENT;
     }
 
@@ -191,6 +208,10 @@ public class InvestPlanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static class Section extends SectionAdapter.Section<Section> {
 
         private ArrayList<LineItem> mItems = new ArrayList<>();
+
+        public int getLineItemCount() {
+            return mItems.size();
+        }
 
         private LineItem mHeader;
 

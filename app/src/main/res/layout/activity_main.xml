@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:background="#edf0f2"
     android:layout_width="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
 
     <View
@@ -11,10 +12,37 @@
     android:layout_marginLeft="105dp"
     android:background="#1191FC"/>
 
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/swipeToLoadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:default_to_loading_more_scrolling_duration="500"
+        app:default_to_refreshing_scrolling_duration="1000"
+        app:load_more_complete_delay_duration="0"
+        app:load_more_final_drag_offset="120dp"
+        app:load_more_trigger_offset="88dp"
+        app:refresh_complete_delay_duration="0"
+        app:refresh_final_drag_offset="150dp"
+        app:refresh_trigger_offset="100dp"
+        app:swipe_style="classic">
+        <!--<include-->
+            <!--android:id="@+id/swipe_refresh_header"-->
+            <!--layout="@layout/pull_to_refresh_header_vertical_down"/>-->
+        <com.shiguangzhou.adapter.CustomRefreshHeadView
+            android:id="@+id/swipe_refresh_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:gravity="center" android:padding="20dp"/>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:scrollbars="vertical"
+        android:id="@+id/swipe_target"
         android:background="@null"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+        <!--<include-->
+            <!--android:id="@+id/swipe_load_more_footer"-->
+            <!--layout="@layout/pull_to_refresh_header_vertical_down"/>-->
+        <com.shiguangzhou.adapter.CustomLoadFooterView
+            android:id="@+id/swipe_load_more_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:gravity="center" android:padding="20dp"/>
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
 </RelativeLayout>
